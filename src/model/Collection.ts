@@ -16,7 +16,6 @@ const CollectionSchema = new Schema<CollectionDocument>({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: [true, 'User is required']
  },
 },
 {
