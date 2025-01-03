@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Send Telegram Notification
-      env:
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-      run: |
-        MESSAGE="🚀 New GitHub Action Triggered 🚀%0ARepository: $GITHUB_REPOSITORY%0AEvent: $GITHUB_EVENT_NAME%0ACommit: $GITHUB_SHA%0AURL: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
-        curl -s --data "chat_id=$TELEGRAM_CHAT_ID&text=$MESSAGE&parse_mode=Markdown" "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
+      - name: Send Telegram Notification
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_TO }}
+        run: |
+          MESSAGE="🚀 New GitHub Action Triggered 🚀%0ARepository: $GITHUB_REPOSITORY%0AEvent: $GITHUB_EVENT_NAME%0ACommit: $GITHUB_SHA%0AURL: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          curl -s --data "chat_id=$TELEGRAM_CHAT_ID&text=$MESSAGE&parse_mode=Markdown" "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
