@@ -1,31 +1,29 @@
-name: Telegram Notification
+name: Notify New Commits
 
 on:
   push:
-    branches: # Match all branches
-      - '**'
-  pull_request:
-    branches: # Match all branches
-      - '**'
+    branches:
+      - main
 
 jobs:
-  build:
-    name: Build
+  notify:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Get new commits
         id: new-commits
         run: |
-          commits=$(jq -r '.commits[] | "[\(.id[:7])](https://github.com/${{ github.repository }}/commit/\(.id)) \(.message)| \(.author.name)"' < "${GITHUB_EVENT_PATH}")
-          echo "commits=$commits" >> $GITHUB_ENV
+          commits=$(jq -r '.commits[] | "[\(.id[:7])](https://github.com/${{ github.repository }}/commit/\(.id)) \(.message) | \(.author.name)"' < "${GITHUB_EVENT_PATH}")
+          echo "commits=\"$commits\"" >> $GITHUB_ENV
 
-      - name: send telegram message on push
+      - name: Send Telegram message
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            |
             🚀 New Commit Alert by ${{ github.actor }} 🚀
 
             📂 **Repository:**
