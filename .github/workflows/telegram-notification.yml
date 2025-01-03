@@ -20,16 +20,17 @@ jobs:
         id: commits
         run: |
           # Create a list of commit messages with details
-          echo "commits=" > $GITHUB_ENV
+          echo "commits=" >> $GITHUB_ENV
           for commit in $(jq -c '.commits[]' < "${GITHUB_EVENT_PATH}"); do
-            message=$(echo "$commit" | jq -r '.message')
+            message=$(echo "$commit" | jq -r '.message' | sed 's/_/\\_/g; s/*/\\*/g; s/\[/\\[/g; s/\]/\\]/g; s/(/\\(/g; s/)/\\)/g; s/~/\\~/g')
             url=$(echo "$commit" | jq -r '.url')
-            author=$(echo "$commit" | jq -r '.author.name')
-            email=$(echo "$commit" | jq -r '.author.email')
+            author=$(echo "$commit" | jq -r '.author.name' | sed 's/_/\\_/g; s/*/\\*/g')
+            email=$(echo "$commit" | jq -r '.author.email' | sed 's/_/\\_/g; s/*/\\*/g')
 
-            echo "🚀 **Commit Message:** $message" >> $GITHUB_ENV
-            echo "🔗 **Commit URL:** $url" >> $GITHUB_ENV
-            echo "📝 **Author:** $author ($email)" >> $GITHUB_ENV
+            echo "🚀 *Commit Message:* $message" >> $GITHUB_ENV
+            echo "🔗 *Commit URL:* [View Commit]($url)" >> $GITHUB_ENV
+            echo "📝 *Author:* $author \\($email\\)" >> $GITHUB_ENV
+            echo "" >> $GITHUB_ENV
           done
 
       - name: Send Telegram message
@@ -37,17 +38,17 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
+          parse_mode: MarkdownV2
           message: |
-            🚀 New Commit(s) Alert by ${{ github.actor }} 🚀
+            🚀 *New Commit(s) Alert by* ${{ github.actor }} 🚀
 
-            📂 **Repository:**
+            📂 *Repository:*
             ${{ github.repository }}
 
-            🔗 **View Repository:**
-            [Click here to view](https://github.com/${{ github.repository }})
+            🔗 [View Repository](https://github.com/${{ github.repository }})
 
-            🕒 **Timestamp:**
+            🕒 *Timestamp:*
             ${{ github.event.head_commit.timestamp }}
 
-            📄 **Commit Details:**
+            📄 *Commit Details:*
             ${{ env.commits }}
