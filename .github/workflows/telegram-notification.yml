@@ -16,7 +16,7 @@ jobs:
       - name: Get new commits
         id: new-commits
         run: |
-          commits=$(jq -r '.commits[] | "[\(.id)](https://github.com/your-repo/commit/\(.id)) \(.message) | \(.author.name)"' < "${GITHUB_EVENT_PATH}")
+          commits=$(jq -r '.commits[] | "[\(.id)] \(.message) | \(.author.name)"' < "${GITHUB_EVENT_PATH}" | paste -sd '\n' -)
           echo "commits=$commits" >> $GITHUB_ENV
 
       - name: send telegram message on push
