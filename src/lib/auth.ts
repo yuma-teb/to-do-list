@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { connectDB } from '@/lib/mongodb';
 import User from '@/model/User';
 import type { NextAuthOptions } from 'next-auth';

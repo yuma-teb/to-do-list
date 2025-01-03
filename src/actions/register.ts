@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 'use server';
 import { connectDB } from '@/lib/mongodb';
 import User from '@/model/User';

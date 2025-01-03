@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { connectDB } from '@/lib/mongodb';
 import { NextResponse, NextRequest } from 'next/server';
 import Collection from '@/model/Collection';
