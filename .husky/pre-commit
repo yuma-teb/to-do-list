@@ -3,6 +3,10 @@
 
 echo '🏗️👷 Styling, testing, and building your project before committing'
 
+# Clean up the eslint and prettier
+npm run lint:fix && npm run prettier && (
+  echo '🧹 Cleaned up the codebase'
+)
 # Check Prettier standards
 npm run check-format ||
 (

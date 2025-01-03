@@ -1,6 +1,6 @@
 import mongoose, { Schema, model } from 'mongoose';
 
-export interface CollectionDocument       {
+export interface CollectionDocument {
   _id: string;
   name: string;
   user: mongoose.Types.ObjectId;
