@@ -27,10 +27,7 @@ jobs:
             author=$(echo "$commit" | jq -r '.author.name' | sed 's/_/\\_/g; s/*/\\*/g')
             email=$(echo "$commit" | jq -r '.author.email' | sed 's/_/\\_/g; s/*/\\*/g')
 
-            echo "🚀 *Commit Message:* $message" >> $GITHUB_ENV
-            echo "🔗 *Commit URL:* [View Commit]($url)" >> $GITHUB_ENV
-            echo "📝 *Author:* $author \\($email\\)" >> $GITHUB_ENV
-            echo "" >> $GITHUB_ENV
+           echo "🚀 Commit: $commit_id | 📝 Message: $message | 👤 Author: $author" >> $GITHUB_ENV
           done
 
       - name: Send Telegram message
