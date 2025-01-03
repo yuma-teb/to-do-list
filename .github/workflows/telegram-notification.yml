@@ -19,9 +19,22 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            ${{ github.actor }} created commit:
-            Commit message: ${{ github.event.commits[0].message }}
+            |
+            🚀 New Commit Alert by ${{ github.actor }} 🚀
 
-            Repository: ${{ github.repository }}
+            📄 **Commit Message:**
+            ${{ github.event.commits[0].message }}
 
-            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            📂 **Repository:**
+            ${{ github.repository }}
+
+            🔗 **View Commit:**
+            [Click here to see the changes](https://github.com/${{ github.repository }}/commit/${{github.sha}})
+
+            🕒 **Timestamp:**
+            ${{ github.event.head_commit.timestamp }}
+
+            📝 **Commit Details:**
+            - **Author:** ${{ github.event.head_commit.author.name }}
+            - **Email:** ${{ github.event.head_commit.author.email }}
+            - **Commit ID:** ${{ github.sha }}
