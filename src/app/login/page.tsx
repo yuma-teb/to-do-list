@@ -1,28 +1,28 @@
-'use client'
-import { FormEvent, useState } from 'react'
-import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
+'use client';
+import Link from 'next/link';
+import { signIn } from 'next-auth/react';
+import { useState, FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
-  const [error, setError] = useState('')
-  const router = useRouter()
+  const [error, setError] = useState('');
+  const router = useRouter();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const formData = new FormData(event.currentTarget)
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const res = await signIn('credentials', {
       email: formData.get('email'),
       password: formData.get('password'),
       redirect: false,
-    })
+    });
     if (res?.error) {
-      setError(res.error as string)
+      setError(res.error as string);
     }
     if (res?.ok) {
-      return router.push('/')
+      return router.push('/');
     }
-  }
+  };
 
   return (
     <section className="w-full h-screen flex items-center justify-center">
@@ -49,17 +49,15 @@ export default function Login() {
             name="password"
           />
         </div>
-        <button className="w-full border border-solid border-black rounded">
-          Sign In
-        </button>
+        <button className="w-full border border-solid border-black rounded">Sign In</button>
 
         <Link
           href="/register"
           className="text-sm text-[#888] transition duration-150 ease hover:text-black"
         >
-          Don't have an account?
+          Hello
         </Link>
       </form>
     </section>
-  )
+  );
 }

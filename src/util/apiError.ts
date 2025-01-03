@@ -9,15 +9,12 @@ export class BaseError extends Error {
     this.message = message;
     this.statusCode = statusCode;
 
-    Error.captureStackTrace(this)
+    Error.captureStackTrace(this);
   }
-
-
 }
-
 
 export class APIError extends BaseError {
   constructor(message: ErrorMessage, statusCode = 500) {
-    super(message, statusCode)
+    super(message, statusCode);
   }
 }

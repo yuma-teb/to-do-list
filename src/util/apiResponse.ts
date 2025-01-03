@@ -63,23 +63,34 @@ export class ResponseBuilder {
       error: this.error,
       errorCode: this.errorCode,
       errorDetails: this.errorDetails,
-    }
+    };
   }
 
-  protected buildResponse(status: StatusMessage ,message: string, statusCode: HttpStatusCode, data?: any, error?: any, errorCode?: any, errorDetails?: any) {
-    return this.setStatus(status).setStatusCode(statusCode).setMessage(message).setData(data).setError(error).setErrorCode(errorCode).setErrorDetails(errorDetails).build();
+  protected buildResponse(
+    status: StatusMessage,
+    message: string,
+    statusCode: HttpStatusCode,
+    data?: any,
+    error?: any,
+    errorCode?: any,
+    errorDetails?: any
+  ) {
+    return this.setStatus(status)
+      .setStatusCode(statusCode)
+      .setMessage(message)
+      .setData(data)
+      .setError(error)
+      .setErrorCode(errorCode)
+      .setErrorDetails(errorDetails)
+      .build();
   }
-
-
-
 }
-
 
 class ApiResponseBuilder extends ResponseBuilder {
   constructor() {
     super();
   }
-    /**
+  /**
    * Response for successful request
    *
    * @param message
@@ -87,42 +98,78 @@ class ApiResponseBuilder extends ResponseBuilder {
    * @param data
    * @returns
    */
-    public ok(message: string, data: any) {
-      return this.buildResponse(StatusMessage.OK, message, HttpStatusCode.OK, data)
-    }
+  public ok(message: string, data: any) {
+    return this.buildResponse(StatusMessage.OK, message, HttpStatusCode.OK, data);
+  }
 
-    /**
-     * Response for created request
-     *
-     * @param message
-     * @param data
-     * @returns
-     */
-    public created(message: string, data: any) {
-      return this.buildResponse(StatusMessage.CREATED, message, HttpStatusCode.CREATED, data)
-    }
+  /**
+   * Response for created request
+   *
+   * @param message
+   * @param data
+   * @returns
+   */
+  public created(message: string, data: any) {
+    return this.buildResponse(StatusMessage.CREATED, message, HttpStatusCode.CREATED, data);
+  }
 
   public badRequest(message: string, error: any) {
-    return this.buildResponse(StatusMessage.BAD_REQUEST, message, HttpStatusCode.BAD_REQUEST, null, error)
+    return this.buildResponse(
+      StatusMessage.BAD_REQUEST,
+      message,
+      HttpStatusCode.BAD_REQUEST,
+      null,
+      error
+    );
   }
 
   public unauthorized(message: string, error: any) {
-    return this.buildResponse(StatusMessage.UNAUTHORIZED, message, HttpStatusCode.UNAUTHORIZED, null, error)
+    return this.buildResponse(
+      StatusMessage.UNAUTHORIZED,
+      message,
+      HttpStatusCode.UNAUTHORIZED,
+      null,
+      error
+    );
   }
 
   public forbidden(message: string, error: any) {
-    return this.buildResponse(StatusMessage.FORBIDDEN, message, HttpStatusCode.FORBIDDEN, null, error)
+    return this.buildResponse(
+      StatusMessage.FORBIDDEN,
+      message,
+      HttpStatusCode.FORBIDDEN,
+      null,
+      error
+    );
   }
 
   public notFound(message: string, error: any) {
-    return this.buildResponse(StatusMessage.NOT_FOUND, message, HttpStatusCode.NOT_FOUND, null, error)
+    return this.buildResponse(
+      StatusMessage.NOT_FOUND,
+      message,
+      HttpStatusCode.NOT_FOUND,
+      null,
+      error
+    );
   }
 
   public conflict(message: string, error: any) {
-    return this.buildResponse(StatusMessage.CONFLICT, message, HttpStatusCode.CONFLICT, null, error)
+    return this.buildResponse(
+      StatusMessage.CONFLICT,
+      message,
+      HttpStatusCode.CONFLICT,
+      null,
+      error
+    );
   }
 
   public internalServerError(message: string, error: any) {
-    return this.buildResponse(StatusMessage.INTERNAL_SERVER_ERROR, message, HttpStatusCode.INTERNAL_SERVER_ERROR, null, error)
+    return this.buildResponse(
+      StatusMessage.INTERNAL_SERVER_ERROR,
+      message,
+      HttpStatusCode.INTERNAL_SERVER_ERROR,
+      null,
+      error
+    );
   }
 }

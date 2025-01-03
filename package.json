@@ -6,7 +6,15 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky",
+    "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
+    "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
+    "check-types": "tsc --pretty --noEmit",
+    "check-format": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\"",
+    "check-lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
+    "test-all": "npm run check-format && npm run check-lint && npm run check-types && npm run build",
+    "commitlint": "commitlint --edit"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -17,14 +25,22 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
     "@eslint/eslintrc": "^3",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
+    "eslint": "^9.17.0",
     "eslint-config-next": "15.1.3",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-perfectionist": "^4.5.0",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.3.0",
     "postcss": "^8",
+    "prettier": "^3.4.2",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

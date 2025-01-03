@@ -1,4 +1,5 @@
 import { connectDB } from '@/lib/mongodb';
+
 import { APIError } from './apiError';
 import { ErrorMessage, HttpStatusCode } from './enum/error';
 
@@ -11,5 +12,5 @@ export async function withDBConnection(fn: Function) {
       console.error(error);
       throw new APIError(ErrorMessage.DATABASE_ERROR, HttpStatusCode.INTERNAL_SERVER_ERROR);
     }
-  }
+  };
 }

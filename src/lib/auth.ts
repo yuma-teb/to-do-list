@@ -1,8 +1,9 @@
-import { connectDB } from '@/lib/mongodb'
-import User from '@/model/User'
-import type { NextAuthOptions } from 'next-auth'
-import credentials from 'next-auth/providers/credentials'
-import bcrypt from 'bcryptjs'
+import type { NextAuthOptions } from 'next-auth';
+
+import bcrypt from 'bcryptjs';
+import User from '@/model/User';
+import { connectDB } from '@/lib/mongodb';
+import credentials from 'next-auth/providers/credentials';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -14,24 +15,21 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials: any) {
-        await connectDB()
+        await connectDB();
         const user = await User.findOne({
           email: credentials?.email,
-        }).select('+password')
+        }).select('+password');
 
-        if (!user) throw new Error('Wrong Email')
+        if (!user) throw new Error('Wrong Email');
 
-        const passwordMatch = await bcrypt.compare(
-          credentials!.password,
-          user.password
-        )
+        const passwordMatch = await bcrypt.compare(credentials!.password, user.password);
 
-        if (!passwordMatch) throw new Error('Wrong Password')
-        return user
+        if (!passwordMatch) throw new Error('Wrong Password');
+        return user;
       },
     } as any),
   ],
   session: {
     strategy: 'jwt',
   },
-}
+};
