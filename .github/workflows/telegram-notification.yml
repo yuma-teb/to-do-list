@@ -2,50 +2,40 @@ name: Telegram Notification
 
 on:
   push:
-    branches:
-      - '**' # Match all branches
+    branches: # Match all branches
+      - '**'
   pull_request:
-    branches:
-      - '**' # Match all branches
+    branches: # Match all branches
+      - '**'
 
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Generate commit messages
-        id: commits
+      - name: Get new commits
+        id: new-commits
         run: |
-          # Create a list of commit messages with details
-          echo "commits=" >> $GITHUB_ENV
-          for commit in $(jq -c '.commits[]' < "${GITHUB_EVENT_PATH}"); do
-            message=$(echo "$commit" | jq -r '.message' | sed 's/_/\\_/g; s/*/\\*/g; s/\[/\\[/g; s/\]/\\]/g; s/(/\\(/g; s/)/\\)/g; s/~/\\~/g')
-            url=$(echo "$commit" | jq -r '.url')
-            author=$(echo "$commit" | jq -r '.author.name' | sed 's/_/\\_/g; s/*/\\*/g')
-            email=$(echo "$commit" | jq -r '.author.email' | sed 's/_/\\_/g; s/*/\\*/g')
+          commits=$(jq -r '.commits[] | "🚀 *Commit ID:* \(.id) 📝 *Commit Message:* \(.message) 👤 *User:* \(.author.name) (\(.author.email))"' < "${GITHUB_EVENT_PATH}")
+          echo "commits=$commits" >> $GITHUB_ENV
 
-           echo "🚀 Commit: $commit_id | 📝 Message: $message | 👤 Author: $author" >> $GITHUB_ENV
-          done
-
-      - name: Send Telegram message
+      - name: send telegram message on push
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          parse_mode: MarkdownV2
           message: |
-            🚀 *New Commit(s) Alert by* ${{ github.actor }} 🚀
+            |
+            🚀 New Commit Alert by ${{ github.actor }} 🚀
 
-            📂 *Repository:*
+            📄 **Commit Message:**
+            ${{ github.event.commits[0].message }}
+
+            📂 **Repository:**
             ${{ github.repository }}
 
-            🔗 [View Repository](https://github.com/${{ github.repository }})
-
-            🕒 *Timestamp:*
+            🕒 **Timestamp:**
             ${{ github.event.head_commit.timestamp }}
 
-            📄 *Commit Details:*
+            📝 **Commits:**
             ${{ env.commits }}
