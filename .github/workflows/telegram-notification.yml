@@ -28,9 +28,6 @@ jobs:
             |
             🚀 New Commit Alert by ${{ github.actor }} 🚀
 
-            📄 **Commit Message:**
-            ${{ github.event.commits[0].message }}
-
             📂 **Repository:**
             ${{ github.repository }}
 
