@@ -35,7 +35,7 @@ jobs:
       - name: Deploy to server
         run: |
           ssh -o StrictHostKeyChecking=no deploy@${{ secrets.IP_ADDRESS }} << EOF
-            cd ./home/deploy
+            cd ./to-do-list
             echo "current path: $(pwd)"
             git checkout deploy
             git pull origin deploy
