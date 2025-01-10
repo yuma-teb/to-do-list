@@ -37,5 +37,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no deploy@${{ secrets.IP_ADDRESS }} << EOF
             cd ./to-do-list
             echo "current path: $(pwd)"
-            npm run build
+            git checkout feature/deploy
+            git pull origin feature/deploy
+            
           EOF
