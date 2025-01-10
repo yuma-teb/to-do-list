@@ -1,5 +1,5 @@
 # Step 1: Build the image based on Node.js image
-FROM node:16 AS builder
+FROM node:20.9.0 AS builder
 
 # Set working directory
 WORKDIR /app
@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Step 2: Set up the production environment
-FROM node:16
+FROM node:20.9.0
 
 # Set working directory
 WORKDIR /app
