@@ -20,6 +20,12 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      # Add SSH host key to known_hosts
+      - name: Add SSH Host Key to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.IP_ADDRESS }} >> ~/.ssh/known_hosts
+
       # Step 3: Copy project files from git hub action runner to the server
       - name: Copy Project Files to Server
         run: |
