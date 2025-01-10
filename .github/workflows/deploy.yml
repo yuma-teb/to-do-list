@@ -39,5 +39,5 @@ jobs:
             echo "current path: $(pwd)"
             git checkout feature/deploy
             git pull origin feature/deploy
-            
+            pm2 restart todolist
           EOF
