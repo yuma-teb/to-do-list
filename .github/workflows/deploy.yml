@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - deploy  # Trigger the workflow on push to the deploy branch
+      - feature/deploy  # Trigger the workflow on push to the deploy branch
 
 jobs:
   deploy:
