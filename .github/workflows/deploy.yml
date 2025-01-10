@@ -35,8 +35,8 @@ jobs:
       - name: Deploy to server
         run: |
           ssh -o StrictHostKeyChecking=no deploy@${{ secrets.IP_ADDRESS }} << EOF
-            cd ..
-            cd home/deploy/to-do-list
+            cd ./home/deploy/to-do-list
+            echo "current path: $(pwd)"
             git checkout deploy
             git pull origin deploy
             sudo docker-compose down
