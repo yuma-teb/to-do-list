@@ -13,7 +13,7 @@ services:
     networks:
       - app-network
     volumes:
-      - .:/app # Mount the app directory to the container
+      - .:/app
 
 networks:
   app-network:
