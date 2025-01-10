@@ -40,5 +40,4 @@ jobs:
             git checkout feature/deploy
             git pull origin feature/deploy
             pm2 restart todolist
-            docker-compose up -d --build
           EOF
